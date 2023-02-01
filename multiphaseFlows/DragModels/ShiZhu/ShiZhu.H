@@ -31,7 +31,14 @@ Description
 
     Reference:
     \verbatim
-        
+       Zhansheng Shi, Wei Wang, Jinghai Li,
+       A bubble-based EMMS model for gas–solid bubbling fluidization,
+       Chemical Engineering Science,
+       Volume 66, Issue 22,
+       2011,
+       Pages 5541-5555,
+       ISSN 0009-2509,
+       https://doi.org/10.1016/j.ces.2011.07.020. 
     \endverbatim
 
 SourceFiles
