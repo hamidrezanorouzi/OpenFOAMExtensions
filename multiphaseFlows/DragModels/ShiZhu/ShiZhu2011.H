@@ -24,7 +24,7 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::dragModels::ShiZhu
+    Foam::dragModels::ShiZhu2011
 
 Description
     
@@ -42,12 +42,12 @@ Description
     \endverbatim
 
 SourceFiles
-    ShiZhu.C
+    ShiZhu2011.C
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef ShiZhu_H
-#define ShiZhu_H
+#ifndef ShiZhu2011_H
+#define ShiZhu2011_H
 
 #include "dragModel.H"
 
@@ -70,7 +70,7 @@ class WenYu;
                            Class Zhu2008 Declaration
 \*---------------------------------------------------------------------------*/
 
-class ShiZhu
+class ShiZhu2011
 :
     public dragModel
 {
@@ -91,13 +91,13 @@ class ShiZhu
 public:
 
     //- Runtime type information
-    TypeName("ShiZhu");
+    TypeName("ShiZhu2011");
 
 
     // Constructors
 
         //- Construct from a dictionary and a phase pair
-        ShiZhu
+        ShiZhu2011
         (
             const dictionary& dict,
             const phasePair& pair,
@@ -106,7 +106,7 @@ public:
 
 
     //- Destructor
-    virtual ~ShiZhu();
+    virtual ~ShiZhu2011();
 
 
     // Member Functions

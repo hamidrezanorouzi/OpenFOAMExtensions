@@ -25,7 +25,7 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-#include "ShiZhu.H"
+#include "ShiZhu2011.H"
 #include "phasePair.H"
 #include "Ergun.H"
 #include "WenYu.H"
@@ -39,15 +39,15 @@ namespace Foam
 {
 namespace dragModels
 {
-    defineTypeNameAndDebug(ShiZhu, 0);
-    addToRunTimeSelectionTable(dragModel, ShiZhu, dictionary);
+    defineTypeNameAndDebug(ShiZhu2011, 0);
+    addToRunTimeSelectionTable(dragModel, ShiZhu2011, dictionary);
 }
 }
 
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-Foam::dragModels::ShiZhu::ShiZhu
+Foam::dragModels::ShiZhu2011::ShiZhu2011
 (
     const dictionary& dict,
     const phasePair& pair,
@@ -80,13 +80,13 @@ Foam::dragModels::ShiZhu::ShiZhu
 
 // * * * * * * * * * * * * * * * * Destructor  * * * * * * * * * * * * * * * //
 
-Foam::dragModels::ShiZhu::~ShiZhu()
+Foam::dragModels::ShiZhu2011::~ShiZhu2011()
 {}
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-Foam::tmp<Foam::volScalarField> Foam::dragModels::ShiZhu::CdRe() const
+Foam::tmp<Foam::volScalarField> Foam::dragModels::ShiZhu2011::CdRe() const
 {
     volScalarField alpha2
     (
