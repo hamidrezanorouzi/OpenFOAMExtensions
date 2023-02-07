@@ -1,0 +1,3 @@
+ShiZhu2011/ShiZhu2011.C
+
+LIB = $(FOAM_USER_LIBBIN)/libnewDragModels
