@@ -45,14 +45,18 @@ jobs:
           '
 
       - name: Clone Wiki
+        env:
+          WIKI_TOKEN: ${{ secrets.WIKI_TOKEN }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git clone https://github.com/hamidrezanorouzi/OpenFOAMExtensions.wiki.git
+          git clone https://${WIKI_TOKEN}@github.com/hamidrezanorouzi/OpenFOAMExtensions.wiki.git
           cp wiki_content.md OpenFOAMExtensions.wiki/MultiphaseFlows.md
 
       - name: Commit and Push to Wiki
         working-directory: OpenFOAMExtensions.wiki
+        env:
+          WIKI_TOKEN: ${{ secrets.WIKI_TOKEN }}
         run: |
           git add MultiphaseFlows.md
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update wiki from multiphaseFlows/readme.md" && git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/hamidrezanorouzi/OpenFOAMExtensions.wiki.git)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update wiki from multiphaseFlows/readme.md" && git push https://${WIKI_TOKEN}@github.com/hamidrezanorouzi/OpenFOAMExtensions.wiki.git)
