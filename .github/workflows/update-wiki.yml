@@ -1,0 +1,58 @@
+name: Update Wiki from README
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'multiphaseFlows/readme.md'
+
+jobs:
+  update-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install markdown-it fs-extra
+
+      - name: Convert README to Wiki
+        run: |
+          node -e '
+            const fs = require("fs-extra");
+            const md = fs.readFileSync("multiphaseFlows/readme.md", "utf8");
+            
+            // Replace relative links with absolute URLs
+            let wikiContent = md
+              .replace(/\.\/(performance1\.png)/g, "https://github.com/hamidrezanorouzi/OpenFOAMExtensions/blob/main/multiphaseFlows/$1")
+              .replace(/\.\/(DragModels\/ShiZhu2011\/ShiZhu2011\.H)/g, "https://github.com/hamidrezanorouzi/OpenFOAMExtensions/blob/main/multiphaseFlows/$1")
+              .replace(/\.\/(DragModels\/ShiZhu2011\/README\.md)/g, "https://github.com/hamidrezanorouzi/OpenFOAMExtensions/blob/main/multiphaseFlows/$1");
+
+            // General pattern for any other relative links
+            wikiContent = wikiContent.replace(/\.\/([\w\/.-]+)/g, (match, path) => {
+              // Skip already processed links
+              if (match.includes("https://github.com")) return match;
+              return `https://github.com/hamidrezanorouzi/OpenFOAMExtensions/blob/main/multiphaseFlows/${path}`;
+            });
+            
+            fs.writeFileSync("wiki_content.md", wikiContent);
+          '
+
+      - name: Clone Wiki
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git clone https://github.com/hamidrezanorouzi/OpenFOAMExtensions.wiki.git
+          cp wiki_content.md OpenFOAMExtensions.wiki/MultiphaseFlows.md
+
+      - name: Commit and Push to Wiki
+        working-directory: OpenFOAMExtensions.wiki
+        run: |
+          git add MultiphaseFlows.md
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update wiki from multiphaseFlows/readme.md" && git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/hamidrezanorouzi/OpenFOAMExtensions.wiki.git)
